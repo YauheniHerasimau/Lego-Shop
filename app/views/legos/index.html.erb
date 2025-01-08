@@ -1,11 +1,25 @@
-<h1>Our LEGO Collection</h1>
+<h1>LEGO Collection</h1>
+
+<div>
+    <%= form_tag legos_path, method: :get, class: "select-form" do %>
+        <%= select_tag :order_by, 
+        options_for_select([
+            ['All', 'all'],
+            ['Newest', 'newest'],
+            ['Sort by price', 'price'],
+            ['Sort by name', 'name']
+        ], params[:order_by]),
+        onchange: 'this.form.submit()' %>
+    <% end %>
+</div>
+
 <div class="catalog">
-  <% @legos.each do |lego| %>
-    <div class="lego-card">
-      <img src="<%= lego.image_url %>">
-      <h2><%= lego.name %></h2>
-      <p>Price: <%= number_to_currency(lego.price) %></p>
-      <%= link_to 'View Details', lego_description_path(lego) %>
-    </div>
-  <% end %>
+    <% @legos.each do |lego| %>
+        <div class="lego-card">
+            <img src="<%= lego.image_url %>">
+            <h2><%= lego.name %></h2>
+            <p>Price: <%= number_to_currency(lego.price) %></p>
+            <%= link_to 'View Details', lego_description_path(lego) %>
+        </div>
+    <% end %>
 </div>
