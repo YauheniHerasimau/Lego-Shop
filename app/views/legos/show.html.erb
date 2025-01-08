@@ -1,0 +1,13 @@
+<div class="product-container">
+  <div>
+    <h1><%= @lego.name %></h1>
+  </div>
+    <h2>Product Details</h2>
+    <p class="price"><%= number_to_currency(@lego.price) %></p>
+    <p class="pieces">Pieces: <%= @lego.details %></p>
+  <div class="product-description">
+    <h2>Description</h2>
+    <p><%= @lego.description %></p>
+  </div>
+  <%= link_to 'Back to Catalog', legos_path %>
+</div>

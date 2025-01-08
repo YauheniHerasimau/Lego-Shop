@@ -1,0 +1,11 @@
+<h1>Our LEGO Collection</h1>
+<div class="catalog">
+  <% @legos.each do |lego| %>
+    <div class="lego-card">
+      <img src="<%= lego.image_url %>">
+      <h2><%= lego.name %></h2>
+      <p>Price: <%= number_to_currency(lego.price) %></p>
+      <%= link_to 'View Details', lego_description_path(lego) %>
+    </div>
+  <% end %>
+</div>
