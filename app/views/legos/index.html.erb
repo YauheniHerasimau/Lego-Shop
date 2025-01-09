@@ -1,5 +1,7 @@
 <h1>LEGO Collection</h1>
 
+<%= link_to "Add new Lego", new_lego_path %>
+
 <div>
     <%= form_tag legos_path, method: :get, class: "select-form" do %>
         <%= select_tag :order_by, 
@@ -15,11 +17,9 @@
 
 <div class="catalog">
     <% @legos.each do |lego| %>
-        <div class="lego-card">
-            <img src="<%= lego.image_url %>">
+        <%= link_to lego_path(lego), class: "lego-card" do %>
             <h2><%= lego.name %></h2>
             <p>Price: <%= number_to_currency(lego.price) %></p>
-            <%= link_to 'View Details', lego_description_path(lego) %>
-        </div>
+        <% end %>
     <% end %>
 </div>

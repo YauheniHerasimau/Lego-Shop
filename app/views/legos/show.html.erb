@@ -1,13 +1,17 @@
-<div class="product-container">
+<div id="<%= dom_id @lego %>">
   <div>
     <h1><%= @lego.name %></h1>
   </div>
     <h2>Product Details</h2>
     <p class="price"><%= number_to_currency(@lego.price) %></p>
     <p class="pieces">Pieces: <%= @lego.details %></p>
-  <div class="product-description">
+  <div class>
     <h2>Description</h2>
     <p><%= @lego.description %></p>
   </div>
-  <%= link_to 'Back to Catalog', legos_path %>
+  <div>
+    <%= link_to 'Buy Now!', @lego.image_url %>
+    <%= link_to 'Back to Catalog', legos_path %>
+    <%= link_to 'Delete', legos_path, method: :delete, form: { data: { turbo: true } } %>
+  </div>
 </div>
