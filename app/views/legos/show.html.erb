@@ -1,17 +1,35 @@
-<div id="<%= dom_id @lego %>">
-  <div>
-    <h1><%= @lego.name %></h1>
-  </div>
-    <h2>Product Details</h2>
-    <p class="price"><%= number_to_currency(@lego.price) %></p>
-    <p class="pieces">Pieces: <%= @lego.details %></p>
-  <div class>
-    <h2>Description</h2>
-    <p><%= @lego.description %></p>
-  </div>
-  <div>
-    <%= link_to 'Buy Now!', @lego.image_url %>
-    <%= link_to 'Back to Catalog', legos_path %>
-    <%= link_to 'Delete', legos_path, method: :delete, form: { data: { turbo: true } } %>
+<div class="lego-details">
+  <div id="<%= dom_id @lego %>">
+    <div>
+      <h1><%= @lego.name %></h1>
+    </div>
+      <h2>Product Details</h2>
+      <p class="price"><%= number_to_currency(@lego.price) %></p>
+      <p class="pieces">Pieces: <%= @lego.details %></p>
+    <div class>
+      <h2>Description</h2>
+      <p><%= @lego.description %></p>
+    </div>
+    <div>
+      <%= link_to 'Buy Now!', @lego.image_url, class: "button" %>
+      <%= link_to 'Back to Catalog', legos_path, class: "button" %>
+      <% if user_signed_in? && current_user.admin? %>
+        <%= button_to 'Delete', lego_path(@lego), method: :delete %>
+      <% end %>
+    </div>
   </div>
 </div>
+
+<style>
+  .lego-details {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color:rgb(223, 223, 161);
+    border: 1px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+  </style>

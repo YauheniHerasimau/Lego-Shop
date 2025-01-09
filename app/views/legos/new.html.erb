@@ -1,19 +1,83 @@
-<h1>Create New LEGO Set</h1>
-
-<%= form_with legos: @lego do |form| %>
-    <div>
-        <h1>Name</h1>
-        <%= form.text_field :name %>
-        <h1>Description</h1>
-        <%= form.text_area :description %>
-        <h1>Lego Set</h1>
-        <%= form.text_field :lego_set %>
-        <h1>Price</h1>
-        <%= form.number_field :price %>
-        <h1>Quantity</h1>
-        <%= form.number_field :details %>
-        <h1>Image URL</h1>
-        <%= form.text_field :image_url %>
+<div class="lego-form-container">
+    <h1 class="form-title">Create New LEGO Set</h1>
+    <div class="form-wrapper">
+        <%= form_with model: @lego do |form| %>
+            <div>
+                <div class="form-group">            
+                    <h1 class="form-label">Name</h1>
+                    <%= form.text_field :name %>
+                    <h1>Description</h1>
+                    <%= form.text_area :description %>
+                    <h1>Lego Set</h1>
+                    <%= form.text_field :lego_set %>
+                    <h1>Price</h1>
+                    <%= form.number_field :price %>
+                    <h1>Quantity</h1>
+                    <%= form.number_field :details %>
+                    <h1>Image URL</h1>
+                    <%= form.text_field :image_url %>
+                </div>
+            </div>
+            <p>
+                <%= form.submit "Create",class: "submit-button" %>
+                <%= link_to "Back to Catalog", root_path, method: :index, class: "submit-button" %>
+            </p>
+        <% end %>
     </div>
-    <%= form.submit %>
-<% end %>
+</div>
+
+<style>
+    .form-title {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .lego-form-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }    
+
+    .submit-button {
+        background-color:rgb(103, 235, 169);
+        color: black;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+    .submit-button:hover {
+        background-color:rgb(62, 201, 131);
+    }
+
+    .form-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .form-label {
+        align-items: center;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+</style>

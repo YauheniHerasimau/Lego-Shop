@@ -18,6 +18,72 @@
   </head>
 
   <body>
+    <div class="nav-auth">
+      <% if user_signed_in? %>
+        <span class="user-email"><%= current_user.email %></span>
+        <% if current_user.admin? %>
+          <span class="admin-badge">Admin</span>
+        <% end %>
+        <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "auth-button logout" %>
+      <% else %>
+        <%= link_to "Log in", new_user_session_path, class: "auth-button login" %>
+        <%= link_to "Sign up", new_user_registration_path, class: "auth-button signup" %>
+      <% end %>
+  </div>
     <%= yield %>
   </body>
 </html>
+
+<style>
+  .nav-auth {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.auth-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.login {
+  background-color: #0066cc;
+  color: white;
+}
+
+.signup {
+  border: 2px solid #0066cc;
+  color: #0066cc;
+}
+
+.logout {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.user-email {
+  color: #666;
+}
+
+.admin-badge {
+  background-color: #28a745;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.auth-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+</style>

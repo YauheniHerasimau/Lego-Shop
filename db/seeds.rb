@@ -1,4 +1,4 @@
-Legos.create(
+Lego.create(
   name: "Millennium Falcon",
   description: "The Millennium Falcon is a fictional starship in the Star Wars universe.",
   lego_set: "Lego Star Wars",
@@ -7,7 +7,7 @@ Legos.create(
   price: 799.99
 )
 
-Legos.create(
+Lego.create(
   name: "Death Star",
   description: "The Death Star is a fictional moon-sized space station in the Star Wars universe.",
   lego_set: "Lego Star Wars",
@@ -16,7 +16,7 @@ Legos.create(
   price: 1499.99
 )
 
-Legos.create(
+Lego.create(
   name: "BMW M3 E46",
   description: "The BMW M3 E46 is a high-performance sports car produced by BMW.",
   lego_set: "Lego Technic",
@@ -25,7 +25,7 @@ Legos.create(
   price: 299.99
 )
 
-Legos.create(
+Lego.create(
   name: "Alfa Romeo GT Coupe",
   description: "The Alfa Romeo GT Coupe is a sports car produced by Alfa Romeo.",
   lego_set: "Lego Technic",

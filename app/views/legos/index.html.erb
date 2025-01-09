@@ -1,25 +1,43 @@
-<h1>LEGO Collection</h1>
+<div class="lego-shop">
+    <h1>LEGO Collection</h1>
 
-<%= link_to "Add new Lego", new_lego_path %>
-
-<div>
-    <%= form_tag legos_path, method: :get, class: "select-form" do %>
-        <%= select_tag :order_by, 
-        options_for_select([
-            ['All', 'all'],
-            ['Newest', 'newest'],
-            ['Sort by price', 'price'],
-            ['Sort by name', 'name']
-        ], params[:order_by]),
-        onchange: 'this.form.submit()' %>
-    <% end %>
-</div>
-
-<div class="catalog">
-    <% @legos.each do |lego| %>
-        <%= link_to lego_path(lego), class: "lego-card" do %>
-            <h2><%= lego.name %></h2>
-            <p>Price: <%= number_to_currency(lego.price) %></p>
+    <div>
+        <%= form_tag legos_path, method: :get, class: "select-form" do %>
+            <%= select_tag :order_by, 
+            options_for_select([
+                ['All', 'all'],
+                ['Newest', 'newest'],
+                ['Sort by price', 'price'],
+                ['Sort by name', 'name']
+            ], params[:order_by]),
+            onchange: 'this.form.submit()' %>
         <% end %>
-    <% end %>
+
+        <% if user_signed_in? && current_user.admin? %>
+        <%= link_to "Add new Lego", new_lego_path %>
+        <% end %>
+    </div>
+
+    <div class="catalog">
+        <% @legos.each do |lego| %>
+            <%= link_to lego_path(lego), class: "lego-card" do %>
+                <h2><%= lego.name %></h2>
+                <p>Price: <%= number_to_currency(lego.price) %></p>
+            <% end %>
+        <% end %>
+    </div>
 </div>
+
+<style>
+  .lego-shop {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color:rgb(223, 223, 161);
+    border: 1px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+  }
+  </style>

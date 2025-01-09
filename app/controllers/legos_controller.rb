@@ -1,6 +1,8 @@
 class LegosController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
+  before_action :require_admin, only: [:new, :create, :destroy]
   def index
-    @legos = Legos.all
+    @legos = Lego.all
 
     @legos = case params[:order_by]
     when "all"
@@ -17,48 +19,38 @@ class LegosController < ApplicationController
   end
 
   def show
-    @lego = Legos.find(params[:id])
+    @lego = Lego.find(params[:id])
   end
 
   def new
-    @lego = Legos.new(lego_params)
-
-    if @lego.save
-      respond_to do |format|
-        format.html { redirect_to legos_path }
-      end
-    else
-      render :new, status: :unprocessable_entity
-    end
+    @lego = Lego.new
   end
 
   def create
-    @lego = Legos.new(lego_params)
-
-    respond_to do |format|
-      if @lego.save
-        format.html { redirect_to legos_path }
-        format.json { render :show, ststus: :created, location: @lego }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @lego.errors, status: :unprocessable_entity }
-      end
+    @lego = Lego.new(lego_params)
+    if @lego.save
+      redirect_to root_path
+    else
+      render :new
     end
   end
 
 
   def destroy
-    @lego = Legos.find(params[:id])
+    @lego = Lego.find(params[:id])
     @lego.destroy
-    respond_to do |format|
-      format.html { redirect_to legos_path }
-      format.turbo_stream
-    end
+    redirect_to root_path
   end
 
   private
 
+  def require_admin
+    unless current_user&.admin?
+      redirect_to root_path, notice: "You are not authorized to perform this action."
+    end
+  end
+
   def lego_params
-    params.permit(:name, :description, :lego_set, :details, :image_url, :price)
+    params.require(:lego).permit(:name, :description, :lego_set, :details, :image_url, :price)
   end
 end
