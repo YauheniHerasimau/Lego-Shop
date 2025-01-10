@@ -1,5 +1,6 @@
 <div class="lego-shop">
-    <h1>LEGO Collection</h1>
+    <%= image_tag "logo.jpg", class: "logo" %>
+    <h1 class="logo-label">Collection</h1>
 
     <div>
         <%= form_tag legos_path, method: :get, class: "select-form" do %>
@@ -39,5 +40,30 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
     font-size: 16px;
+  }
+
+  .select-form {
+    position: absolute;
+    top: 100px;
+    left: 60%;
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+
+  .logo {
+    width: 200px;
+    height: 200px;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .logo-label {
+    position: absolute;
+    top: 120px;
+    left: 40%;
+    margin-left: 10px;
+    margin-top: 10px;
   }
   </style>
