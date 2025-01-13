@@ -4,6 +4,11 @@ Rails.application.routes.draw do
   resources :legos
   resources :description
 
+  resource :cart, only: [:show] do
+    post 'add_item/:id', to: 'carts#add_item', as: :add_item
+    delete 'remove_item/:item_id', to: 'carts#remove_item', as: :remove_item
+  end
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

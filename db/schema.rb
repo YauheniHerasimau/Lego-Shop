@@ -10,7 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_09_225911) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_13_000005) do
+  create_table "cart_items", force: :cascade do |t|
+    t.integer "cart_id", null: false
+    t.integer "lego_id", null: false
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_cart_items_on_cart_id"
+    t.index ["lego_id"], name: "index_cart_items_on_lego_id"
+  end
+
+  create_table "carts", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
+  create_table "catr_items", force: :cascade do |t|
+    t.integer "cart_id", null: false
+    t.integer "quatity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_catr_items_on_cart_id"
+  end
+
   create_table "legos", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -35,4 +60,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_09_225911) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "cart_items", "carts"
+  add_foreign_key "cart_items", "legos"
+  add_foreign_key "carts", "users"
+  add_foreign_key "catr_items", "carts"
 end

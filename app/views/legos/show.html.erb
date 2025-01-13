@@ -13,6 +13,9 @@
     <div>
       <%= link_to 'Buy Now!', @lego.image_url, class: "button" %>
       <%= link_to 'Back to Catalog', legos_path, class: "button" %>
+        <% if user_signed_in? %>
+          <%= button_to 'Add to Cart', add_item_cart_path(lego_id: @lego.id), method: :post %>
+        <% end %>
       <% if user_signed_in? && current_user.admin? %>
         <%= button_to 'Delete', lego_path(@lego), method: :delete %>
       <% end %>
@@ -23,7 +26,7 @@
 <style>
   .lego-details {
     max-width: 800px;
-    margin: 0 auto;
+    margin: 40px auto;
     padding: 20px;
     background-color:rgb(223, 223, 161);
     border: 1px;
@@ -32,4 +35,13 @@
     font-family: Arial, sans-serif;
     font-size: 16px;
   }
+
+  .cart-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
   </style>

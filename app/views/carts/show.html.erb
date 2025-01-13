@@ -1,0 +1,83 @@
+<div class="cart-container">
+    <h1 class="cart-title">Your Shopping Cart</h1>
+
+    <% if @cart.cart_items.any? %>
+        <div class="cart-items">
+        <% @cart.cart_items.each do |item| %>
+            <div class="cart-item">
+            
+            <div class>
+                <h3 class><%= item.lego.name %></h3>
+                <p><%= number_to_currency(item.lego.price) %></p>
+            </div>
+
+            <div class>
+                <p>Total: <%= number_to_currency(item.lego.price) %> * <%= item.quantity %></p>
+                <p>== <%= number_to_currency(item.lego.price * item.quantity) %> ==</p>
+                <%= button_to "Remove", remove_item_cart_path(item_id: item.id), method: :delete, class: "remove-btn" %>
+            </div>
+        <% end %>
+
+        <div>
+            <span>Subtotal:</span>
+            <span><%= number_to_currency(@cart.cart_items.sum { |item| item.lego.price * item.quantity }) %></span>
+        </div>
+</div>
+    <% end %>
+        <%= link_to "Continue Shopping", legos_path, class: "continue-shopping" %>
+        
+<style>
+.cart-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color:rgb(223, 223, 161);
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.cart-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 120px 1fr auto;
+  gap: 20px;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  align-items: center;
+  background-color:rgb(210, 210, 113);
+}
+
+.remove-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.continue-shopping {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background:rgb(45, 193, 173);
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  text-align: center;
+}
+
+</style>
