@@ -3,7 +3,7 @@
     <h1 class="logo-label">Collection</h1>
 
     <div>
-        <%= form_tag legos_path, method: :get, class: "select-form" do %>
+        <%= form_tag legos_path, method: :get do %>
             <%= select_tag :order_by, 
             options_for_select([
                 ['All', 'all'],
@@ -11,7 +11,7 @@
                 ['Sort by price', 'price'],
                 ['Sort by name', 'name']
             ], params[:order_by]),
-            onchange: 'this.form.submit()' %>
+            onchange: 'this.form.submit()', class: "select-form" %>
         <% end %>
     </div>
 
@@ -20,8 +20,12 @@
             <%= link_to lego_path(lego), class: "lego-card" do %>
                 <h2><%= lego.name %></h2>
                 <p>Price: <%= number_to_currency(lego.price) %></p>
-                <% if lego.opinions.any? %>
-                  <p>Rating: <%= lego.opinions.count %></p>
+                <% if lego.opinions.any? %>         
+                  <% lego.average_rating.times do %>
+                    <span>⭐</span>
+                  <% end %>
+                <% else %>
+                  <p>No reviews yet</p>
                 <% end %>
             <% end %>
         <% end %>
@@ -39,14 +43,17 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
     font-size: 16px;
+    
   }
 
   .select-form {
     position: absolute;
     top: 100px;
     left: 60%;
-    margin-right: 10px;
-    margin-top: 10px;
+    width: 150px;
+    height: 30px;
+    background-color: rgb(162, 209, 164);
+    text-align: center;
   }
 
   .logo {
