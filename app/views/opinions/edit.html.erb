@@ -1,0 +1,53 @@
+<div class="opinion-form-container">
+  <h2>Edit Your Review</h2>
+  
+  <%= form_with(model: [@opinion.lego, @opinion], local: true) do |f| %>
+    <div class="field">
+      <%= f.label :rating %>
+      <%= f.select :rating, options_for_select(1..5, @opinion.rating) %>
+    </div>
+
+    <div class="field">
+      <%= f.label :comment %>
+      <%= f.text_area :comment %>
+    </div>
+
+    <%= f.submit "Update Review", class: "button" %>
+    <%= link_to "Cancel", lego_path(@opinion.lego), class: "button" %>
+  <% end %>
+</div>
+
+<style>
+  .opinion-form-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: rgb(223, 223, 161);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .field {
+    margin-bottom: 15px;
+  }
+
+  .field label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .field textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 8px;
+  }
+
+  .button {
+    padding: 8px 16px;
+    margin-right: 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    background-color:rgb(105, 236, 127);
+  }
+</style>

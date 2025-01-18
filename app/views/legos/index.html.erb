@@ -13,10 +13,6 @@
             ], params[:order_by]),
             onchange: 'this.form.submit()' %>
         <% end %>
-
-        <% if user_signed_in? && current_user.admin? %>
-        <%= link_to "Add new Lego", new_lego_path %>
-        <% end %>
     </div>
 
     <div class="catalog">
@@ -24,6 +20,9 @@
             <%= link_to lego_path(lego), class: "lego-card" do %>
                 <h2><%= lego.name %></h2>
                 <p>Price: <%= number_to_currency(lego.price) %></p>
+                <% if lego.opinions.any? %>
+                  <p>Rating: <%= lego.opinions.count %></p>
+                <% end %>
             <% end %>
         <% end %>
     </div>

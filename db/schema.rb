@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_13_000005) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_14_002932) do
   create_table "cart_items", force: :cascade do |t|
     t.integer "cart_id", null: false
     t.integer "lego_id", null: false
@@ -48,6 +48,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_13_000005) do
     t.string "link"
   end
 
+  create_table "opinions", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "lego_id", null: false
+    t.integer "rating", null: false
+    t.text "comment", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lego_id"], name: "index_opinions_on_lego_id"
+    t.index ["user_id", "lego_id"], name: "index_opinions_on_user_id_and_lego_id", unique: true
+    t.index ["user_id"], name: "index_opinions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -65,4 +77,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_13_000005) do
   add_foreign_key "cart_items", "legos"
   add_foreign_key "carts", "users"
   add_foreign_key "catr_items", "carts"
+  add_foreign_key "opinions", "legos"
+  add_foreign_key "opinions", "users"
 end

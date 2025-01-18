@@ -1,0 +1,82 @@
+<div class="opinion-form">
+  <%= form_with(url: lego_opinions_path(@lego), method: :post, local: true, class: "field") do |form| %>
+  <div class="rating-field">
+    <p>Rating: </p>
+    <% 5.times do |i| %>
+      <%= form.radio_button :rating, i + 1 %>
+      <%= form.label "rating_#{i + 1}", "⭐" %>
+    <% end %>
+  </div>
+    <%= form.label :comment %>
+    <%= form.text_area :comment %>
+    <%= form.submit "Create Opinion", class: "submit-button" %>
+  <% end %>
+</div>
+
+<style>
+  .opinion-form {
+    background-color: rgb(235, 235, 221);
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.1);
+  }
+
+.field {
+  margin-bottom: 20px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.field textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.field textarea:focus {
+  border-color:rgb(151, 255, 133);
+  outline: none;
+  box-shadow: 0 0 5px rgba(247, 255, 133, 0.3);
+}
+
+.field textarea {
+  max-width: 350px;
+  min-height: 120px;
+  resize: vertical;
+}
+
+.submit-button {
+  background-color:rgb(103, 235, 169);
+  color: #000000;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  }
+
+.rating-field {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.rating-field input[type="radio"] {
+  display: none;
+}
+
+.rating-field input[type="radio"]:checked + label {
+  font-size: 35px;
+}
+</style>

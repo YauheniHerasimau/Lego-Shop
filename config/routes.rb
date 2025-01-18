@@ -1,12 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users
   root "legos#index"
-  resources :legos
+  resources :legos do
+    resources :opinions, only: [ :create, :edit, :update, :destroy ]
+  end
   resources :description
 
-  resource :cart, only: [:show] do
-    post 'add_item/:id', to: 'carts#add_item', as: :add_item
-    delete 'remove_item/:item_id', to: 'carts#remove_item', as: :remove_item
+  resource :cart, only: [ :show ] do
+    post "add_item/:id", to: "carts#add_item", as: :add_item
+    delete "remove_item/:item_id", to: "carts#remove_item", as: :remove_item
   end
 
 

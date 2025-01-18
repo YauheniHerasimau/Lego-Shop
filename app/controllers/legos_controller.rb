@@ -1,6 +1,6 @@
 class LegosController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :require_admin, only: [:new, :create, :destroy]
+  before_action :authenticate_user!, except: [ :index, :show ]
+  before_action :require_admin, only: [ :new, :create, :destroy ]
   def index
     @legos = Lego.all
 
@@ -18,12 +18,13 @@ class LegosController < ApplicationController
     end
   end
 
-  def show
-    @lego = Lego.find(params[:id])
-  end
-
   def new
     @lego = Lego.new
+  end
+
+  def show
+    @lego = Lego.find(params[:id])
+    @opinion = Opinion.new(lego: @lego)
   end
 
   def create
@@ -46,7 +47,7 @@ class LegosController < ApplicationController
 
   def require_admin
     unless current_user&.admin?
-      redirect_to root_path, notice: "You are not authorized to perform this action."
+      redirect_to root_path
     end
   end
 

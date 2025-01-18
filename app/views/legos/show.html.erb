@@ -1,27 +1,61 @@
 <div class="lego-details">
-  <div id="<%= dom_id @lego %>">
+  <div>
+    <% dom_id @lego %>
     <div>
       <h1><%= @lego.name %></h1>
     </div>
-      <h2>Product Details</h2>
-      <p class="price"><%= number_to_currency(@lego.price) %></p>
-      <p class="pieces">Pieces: <%= @lego.details %></p>
-    <div class>
-      <h2>Description</h2>
+      <h2>Product Details: </h2>
+      <p><%= number_to_currency(@lego.price) %></p>
+      <p>Pieces: <%= @lego.details %></p>
+    <div>
       <p><%= @lego.description %></p>
     </div>
+
     <div>
-      <%= link_to 'Buy Now!', @lego.image_url, class: "button" %>
       <%= link_to 'Back to Catalog', legos_path, class: "button" %>
-        <% if user_signed_in? %>
-          <%= button_to 'Add to Cart', add_item_cart_path(lego_id: @lego.id), method: :post %>
-        <% end %>
-      <% if user_signed_in? && current_user.admin? %>
-        <%= button_to 'Delete', lego_path(@lego), method: :delete %>
+
+      <% if user_signed_in? %>
+        <%= button_to 'Add to Cart', add_item_cart_path(lego_id: @lego.id), method: :post, class: "button" %>
       <% end %>
+
+      <% if user_signed_in? %>
+        <% if current_user.opinions.exists?(lego: @lego) %>
+          <p>You have already left an opinion for this lego.</p>
+        <% else %>
+          <%= render 'opinions/form', lego: @lego, opinion: @opinion %>
+        <% end %>
+      <% end %>
+    </div>
+      <div>
+        <h3>Average Rating: 
+          <% @lego.average_rating.times do %>
+            ⭐
+          <% end %>
+          <h2>Opinions:</h2>
+        </h3>
+          <% @lego.opinions.includes(:user).each do |opinion| %>
+            <div class="cart-container">
+              <% if user_signed_in? && current_user == opinion.user %>
+                <%= button_to 'Delete Opinion', lego_opinion_path(@lego, opinion), method: :delete, class: "button" %>
+                <%= link_to 'Edit Opinion', edit_lego_opinion_path(@lego, opinion), class: "button" %>
+              <% end %>
+              <p>User: <%= opinion.user.email %></p>
+              <p>Rating: <% opinion.rating.times do %>
+                ⭐
+              <% end %>
+              </p>
+              <p>Opinion: <%= opinion.comment %></p>
+              <small>Created at: <%= opinion.created_at.strftime("%d/%m/%Y") %></small>
+            </div>
+          <% end %>
+      </div>
     </div>
   </div>
 </div>
+
+<% if user_signed_in? && current_user.admin? %>
+  <%= button_to 'Delete', lego_path(@lego), method: :delete, class: "button-delete" %>
+<% end %>
 
 <style>
   .lego-details {
@@ -44,4 +78,30 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
-  </style>
+
+.button {
+  padding: 8px 16px;
+  margin-right: 10px;
+  margin-top: 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-block;
+  background-color:rgb(103, 235, 169);
+  color: black;
+  border: black;
+}
+
+.button-delete {
+  position: absolute;
+  top: 150px;
+  right: 20px;
+  width: 100px;
+  height: 30px;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-block;
+  background-color: rgb(255, 0, 0);
+  color: white;
+  border: none;
+}
+</style>
