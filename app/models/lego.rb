@@ -6,5 +6,9 @@ class Lego < ApplicationRecord
     opinions.average(:rating).to_i
   end
 
+  def hidden?
+    hidden
+  end
+
   validates :name, presence: true
 end

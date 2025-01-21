@@ -9,7 +9,8 @@
                 ['All', 'all'],
                 ['Newest', 'newest'],
                 ['Sort by price', 'price'],
-                ['Sort by name', 'name']
+                ['Sort by name', 'name'],
+                ['Sort by rating', 'rating']
             ], params[:order_by]),
             onchange: 'this.form.submit()', class: "select-form" %>
         <% end %>
@@ -17,20 +18,27 @@
 
     <div class="catalog">
         <% @legos.each do |lego| %>
-            <%= link_to lego_path(lego), class: "lego-card" do %>
+            <%= link_to lego_path(lego), class: "lego-card #{lego.hidden? ? "hidden" : ""}" do %>
                 <h2><%= lego.name %></h2>
                 <p>Price: <%= number_to_currency(lego.price) %></p>
                 <% if lego.opinions.any? %>         
-                  <% lego.average_rating.times do %>
-                    <span>⭐</span>
-                  <% end %>
+                    <% lego.average_rating.times do %>
+                        <span>⭐</span>
+                    <% end %>
                 <% else %>
-                  <p>No reviews yet</p>
+                    <p>No reviews yet</p>
+                <% end %>
+
+                <% if current_user&.admin? %>
+                    <% if lego.hidden? %>
+                        <span class="hidden"></span>
+                    <% end %>
                 <% end %>
             <% end %>
         <% end %>
     </div>
 </div>
+
 
 <style>
   .lego-shop {
@@ -72,4 +80,36 @@
     margin-left: 10px;
     margin-top: 10px;
   }
-  </style>
+
+  .catalog {
+    display: flex;
+    flex-wrap: wrap;
+    grid-template-columns: auto;
+    gap: 20px;
+    padding: 20px;
+}
+
+  .lego-card {
+    width: 300px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #f7ff85;
+    transition: transform 0.3s ease;
+    transform-origin: center;
+    text-decoration: none;
+}
+
+  .lego-card:hover {
+    transform: scale(1.1);
+}
+
+  .lego-card.hidden {
+    background-color:rgba(198, 54, 54, 0.42);
+    border: 2px;
+  }
+
+
+</style>

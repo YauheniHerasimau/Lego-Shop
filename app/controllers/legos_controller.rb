@@ -1,8 +1,22 @@
 class LegosController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
-  before_action :require_admin, only: [ :new, :create, :destroy ]
+  before_action :require_admin, only: [ :new, :create, :edit, :update, :destroy, :toggle_hidden ]
+  before_action :set_lego, only: [ :show, :edit, :update, :destroy, :toggle_hidden ]
   def index
-    @legos = Lego.all
+    @legos = if current_user&.admin?
+      case params[:admin_filter]
+      when "hidden"
+        Lego.where(hidden: true)
+      when "visible"
+        Lego.where(hidden: false)
+      when "new"
+        redirect_to new_lego_path and return
+      else
+        Lego.all
+      end
+    else
+      Lego.where(hidden: false)
+    end
 
     @legos = case params[:order_by]
     when "all"
@@ -43,7 +57,27 @@ class LegosController < ApplicationController
     redirect_to root_path
   end
 
+  def edit
+  end
+
+  def update
+    if @lego.update(lego_params)
+      redirect_to @lego
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def toggle_hidden
+    @lego.update(hidden: !@lego.hidden?)
+    redirect_to lego_path
+  end
+
   private
+
+  def set_lego
+    @lego = Lego.find(params[:id])
+  end
 
   def require_admin
     unless current_user&.admin?
@@ -52,6 +86,6 @@ class LegosController < ApplicationController
   end
 
   def lego_params
-    params.require(:lego).permit(:name, :description, :lego_set, :details, :image_url, :price)
+    params.require(:lego).permit(:name, :description, :lego_set, :details, :image_url, :price, :hidden)
   end
 end

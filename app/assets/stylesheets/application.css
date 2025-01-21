@@ -1,26 +1,7 @@
-.catalog {
-    display: flex;
-    flex-wrap: wrap;
-    grid-template-columns: auto;
-    gap: 20px;
-    padding: 20px;
-}
-
-.lego-card {
-    width: 300px;
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #f7ff85;
-    transition: transform 0.3s ease;
-    transform-origin: center;
-    text-decoration: none;
-}
-
-.lego-card:hover {
-    transform: scale(1.1);
+.lego-card.hidden {
+  opacity: 0.6;
+  background-color: rgb(18, 224, 28);
+  border: 2px dashed rgb(23, 67, 25);
 }
 
 body {

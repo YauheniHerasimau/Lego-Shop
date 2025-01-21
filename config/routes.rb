@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   root "legos#index"
   resources :legos do
     resources :opinions, only: [ :create, :edit, :update, :destroy ]
+    patch :toggle_hidden, on: :member
   end
+
   resources :description
 
   resource :cart, only: [ :show ] do

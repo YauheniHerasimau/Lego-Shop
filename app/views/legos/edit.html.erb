@@ -1,5 +1,5 @@
 <div class="lego-form-container">
-    <h1 class="form-title">Create New LEGO Set</h1>
+    <h1 class="form-title">Edit LEGO Set</h1>
     <div class="form-wrapper">
         <%= form_with(model: @lego, local: true) do |form| %>
             <div>
@@ -19,7 +19,7 @@
                 </div>
             </div>
             <p>
-                <%= form.submit "Create", class: "submit-button" %>
+                <%= form.submit "Update Lego set", class: "submit-button" %>
                 <%= link_to "Back to Catalog", root_path, method: :index, class: "submit-button" %>
             </p>
         <% end %>
@@ -81,3 +81,4 @@
         margin-bottom: 0.5rem;
     }
 </style>
+  

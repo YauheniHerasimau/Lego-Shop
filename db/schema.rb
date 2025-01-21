@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_14_002932) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_21_000134) do
   create_table "cart_items", force: :cascade do |t|
     t.integer "cart_id", null: false
     t.integer "lego_id", null: false
@@ -46,6 +46,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_14_002932) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "link"
+    t.boolean "hiden"
+    t.boolean "hidden", default: false
   end
 
   create_table "opinions", force: :cascade do |t|
