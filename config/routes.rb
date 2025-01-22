@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   root "legos#index"
+
   resources :legos do
     resources :opinions, only: [ :create, :edit, :update, :destroy ]
     patch :toggle_hidden, on: :member

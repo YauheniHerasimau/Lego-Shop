@@ -3,6 +3,10 @@ class User < ApplicationRecord
   after_create :create_cart
   has_many :opinions
 
+def admin?
+  admin == true
+end
+
 private
 
 def has_opinion?

@@ -2,8 +2,9 @@ class LegosController < ApplicationController
   before_action :authenticate_user!, except: [ :index, :show ]
   before_action :require_admin, only: [ :new, :create, :edit, :update, :destroy, :toggle_hidden ]
   before_action :set_lego, only: [ :show, :edit, :update, :destroy, :toggle_hidden ]
+
   def index
-    @legos = if current_user&.admin?
+    @legos = if current_user.admin
       case params[:admin_filter]
       when "hidden"
         Lego.where(hidden: true)

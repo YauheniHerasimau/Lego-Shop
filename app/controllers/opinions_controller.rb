@@ -15,9 +15,9 @@ class OpinionsController < ApplicationController
     @opinion.user = current_user
 
     if @opinion.save
-      redirect_to lego_path(@lego), notice: "Opinion was successfully created."
+      redirect_to lego_path(@lego)
     else
-      redirect_to lego_path(@lego), alert: "Failed to create opinion."
+      redirect_to lego_path(@lego)
     end
   end
 

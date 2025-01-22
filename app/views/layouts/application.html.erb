@@ -19,9 +19,6 @@
 
   <body>
     <div class="nav-auth">
-      <%= link_to root_path do %>
-        <%= image_tag "home.jpg", class: "home-link" %>
-      <% end %>
       <% if user_signed_in? %>
 
         <% if user_signed_in? && current_user.admin? == false %>
@@ -66,7 +63,7 @@
     width: 100px;
     height: 100px;
     top: 20px;
-    left: 10px;
+    right: 900px;
   }
 
   .cart-icon {

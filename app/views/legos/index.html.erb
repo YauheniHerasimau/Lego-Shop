@@ -29,7 +29,7 @@
                     <p>No reviews yet</p>
                 <% end %>
 
-                <% if current_user&.admin? %>
+                <% if current_user.admin %>
                     <% if lego.hidden? %>
                         <span class="hidden"></span>
                     <% end %>
