@@ -4,7 +4,7 @@ class LegosController < ApplicationController
   before_action :set_lego, only: [ :show, :edit, :update, :destroy, :toggle_hidden ]
 
   def index
-    @legos = if current_user.admin
+    @legos = if current_user.admin?
       case params[:admin_filter]
       when "hidden"
         Lego.where(hidden: true)

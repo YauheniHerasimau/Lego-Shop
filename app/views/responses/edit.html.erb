@@ -1,0 +1,13 @@
+<div>
+  <h2>Edit Respond to Opinion</h2>
+  
+  <%= form_with(model: [@opinion, @response],  url: opinion_response_path(@opinion, @response), method: :patch) do |f| %>
+    <div class="field">
+      <%= f.label :comment, "Your Response" %>
+      <%= f.text_area :comment, rows: 5, required: true %>
+    </div>
+
+    <%= f.submit "Submit Response" %>
+    <%= link_to "Cancel", lego_path(@opinion.lego) %>
+  </div>
+<% end %>

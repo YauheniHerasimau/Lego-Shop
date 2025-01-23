@@ -41,9 +41,25 @@
               <% end %>
               <p>Opinion: <%= opinion.comment %></p>
               <small>Created at: <%= opinion.created_at.strftime("%d/%m/%Y") %></small>
+
+              <% if opinion.admin_response.present? %>
+                <div class="cart-container">
+                  <p>Admin Response: <%= opinion.admin_response.comment %></p>
+                  <% if user_signed_in? && current_user.admin? %>
+                    <%= button_to 'Edit Response', edit_opinion_response_path(opinion), method: :get %>
+                  <% end %>
+                </div>
+              <% end %>
+
               <% if user_signed_in? && current_user == opinion.user %>
                 <%= button_to 'Delete Opinion', lego_opinion_path(@lego, opinion), method: :delete, class: "button-del" %>
                 <%= link_to 'Edit Opinion', edit_lego_opinion_path(@lego, opinion), class: "button-edit" %>
+              <% end %>
+
+              <% if user_signed_in? && current_user.admin? %>
+                <% if opinion.admin_response.nil? %>
+                  <%= button_to 'Add Response', new_opinion_response_path(opinion), method: :get %>
+                <% end %>
               <% end %>
             </div>
           <% end %>

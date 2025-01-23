@@ -7,6 +7,16 @@ Rails.application.routes.draw do
     patch :toggle_hidden, on: :member
   end
 
+  namespace :admin do
+    resources :opinions do
+      resources :responses, only: [ :create, :edit, :update, :destroy ]
+    end
+  end
+
+  resources :opinions do
+    resources :responses, only: [ :new, :create, :edit, :update, :destroy ]
+  end
+
   resources :description
 
   resource :cart, only: [ :show ] do
