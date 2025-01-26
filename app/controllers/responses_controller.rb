@@ -36,6 +36,17 @@ class ResponsesController < ApplicationController
     end
   end
 
+  def destroy
+    @response = @opinion.admin_response
+
+    if @response.destroy
+      redirect_to lego_path(@opinion.lego)
+    end
+  end
+
+  def delete
+  end
+
 
   private
 

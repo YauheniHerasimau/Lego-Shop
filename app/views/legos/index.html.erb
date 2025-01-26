@@ -4,15 +4,24 @@
 
     <div>
         <%= form_tag legos_path, method: :get do %>
+            <%= select_tag :category_id,
+                options_from_collection_for_select(@categories, :id, :name, params[:category_id]),
+                prompt: "All categories", 
+                onchange: 'this.form.submit()', class: "select-category-form" %>
+                <%= hidden_field_tag :order_by, params[:order_by] if params[:order_by].present? %>
+        <% end %>
+    </div>
+    <div>
+        <%= form_tag legos_path, method: :get do %>
             <%= select_tag :order_by, 
             options_for_select([
-                ['All', 'all'],
                 ['Newest', 'newest'],
                 ['Sort by price', 'price'],
                 ['Sort by name', 'name'],
                 ['Sort by rating', 'rating']
             ], params[:order_by]),
             onchange: 'this.form.submit()', class: "select-form" %>
+            <%= hidden_field_tag :category_id, params[:category_id] if params[:category_id].present? %>
         <% end %>
     </div>
 
@@ -29,7 +38,7 @@
                     <p>No reviews yet</p>
                 <% end %>
 
-                <% if current_user.admin %>
+                <% if user_signed_in? && current_user.admin? %>
                     <% if lego.hidden? %>
                         <span class="hidden"></span>
                     <% end %>
@@ -57,6 +66,16 @@
   .select-form {
     position: absolute;
     top: 100px;
+    left: 60%;
+    width: 150px;
+    height: 30px;
+    background-color: rgb(162, 209, 164);
+    text-align: center;
+  }
+
+  .select-category-form {
+    position: absolute;
+    top: 150px;
     left: 60%;
     width: 150px;
     height: 30px;

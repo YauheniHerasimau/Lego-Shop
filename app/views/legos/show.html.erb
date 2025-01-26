@@ -47,6 +47,7 @@
                   <p>Admin Response: <%= opinion.admin_response.comment %></p>
                   <% if user_signed_in? && current_user.admin? %>
                     <%= button_to 'Edit Response', edit_opinion_response_path(opinion), method: :get %>
+                    <%= button_to 'Delete Response', opinion_response_path(opinion), method: :delete %>
                   <% end %>
                 </div>
               <% end %>
@@ -58,7 +59,7 @@
 
               <% if user_signed_in? && current_user.admin? %>
                 <% if opinion.admin_response.nil? %>
-                  <%= button_to 'Add Response', new_opinion_response_path(opinion), method: :get %>
+                  <%= render "responses/new", opinion: opinion %>
                 <% end %>
               <% end %>
             </div>

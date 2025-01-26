@@ -1,0 +1,11 @@
+<div>
+  <h2>Respond to Opinion</h2>
+  
+  <%= form_with(model: [opinion, AdminResponse.new],  url: opinion_responses_path(opinion), local: true) do |f| %>
+    <div class="field">
+      <%= f.text_area :comment, rows: 3, required: true %>
+    </div>
+
+    <%= f.submit "Submit Response" %>
+  </div>
+<% end %>

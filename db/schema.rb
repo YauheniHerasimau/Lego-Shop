@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_23_213437) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_25_234709) do
   create_table "admin_responses", force: :cascade do |t|
     t.integer "opinion_id", null: false
     t.integer "user_id", null: false
@@ -38,12 +38,28 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_23_213437) do
     t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "catr_items", force: :cascade do |t|
     t.integer "cart_id", null: false
     t.integer "quatity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cart_id"], name: "index_catr_items_on_cart_id"
+  end
+
+  create_table "lego_categories", force: :cascade do |t|
+    t.integer "lego_id", null: false
+    t.integer "category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_lego_categories_on_category_id"
+    t.index ["lego_id", "category_id"], name: "index_lego_categories_on_lego_id_and_category_id", unique: true
+    t.index ["lego_id"], name: "index_lego_categories_on_lego_id"
   end
 
   create_table "legos", force: :cascade do |t|
@@ -92,6 +108,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_23_213437) do
   add_foreign_key "cart_items", "legos"
   add_foreign_key "carts", "users"
   add_foreign_key "catr_items", "carts"
+  add_foreign_key "lego_categories", "categories"
+  add_foreign_key "lego_categories", "legos"
   add_foreign_key "opinions", "legos"
   add_foreign_key "opinions", "users"
 end

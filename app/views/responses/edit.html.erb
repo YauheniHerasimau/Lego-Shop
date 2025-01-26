@@ -3,7 +3,6 @@
   
   <%= form_with(model: [@opinion, @response],  url: opinion_response_path(@opinion, @response), method: :patch) do |f| %>
     <div class="field">
-      <%= f.label :comment, "Your Response" %>
       <%= f.text_area :comment, rows: 5, required: true %>
     </div>
 

@@ -4,24 +4,22 @@ class LegosController < ApplicationController
   before_action :set_lego, only: [ :show, :edit, :update, :destroy, :toggle_hidden ]
 
   def index
-    @legos = if current_user.admin?
-      case params[:admin_filter]
-      when "hidden"
-        Lego.where(hidden: true)
-      when "visible"
-        Lego.where(hidden: false)
-      when "new"
-        redirect_to new_lego_path and return
-      else
-        Lego.all
-      end
+    @categories = Category.joins(:lego_categories).distinct
+
+    @legos = if params[:category_id].present?
+      category = Category.find(params[:category_id])
+      category.legos
     else
-      Lego.where(hidden: false)
+      Lego.all
+    end
+
+    @legos = if user_signed_in? && current_user.admin?
+      @legos
+    else
+      @legos.where(hidden: false)
     end
 
     @legos = case params[:order_by]
-    when "all"
-      @legos.all
     when "newest"
       @legos.order(created_at: :desc)
     when "price"
@@ -39,7 +37,8 @@ class LegosController < ApplicationController
 
   def show
     @lego = Lego.find(params[:id])
-    @opinion = Opinion.new(lego: @lego)
+    @opinion = Opinion.find_by(id: params[:opinion_id])
+    @response = @opinion&.admin_response if @opinion
   end
 
   def create
