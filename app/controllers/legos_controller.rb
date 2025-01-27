@@ -4,11 +4,10 @@ class LegosController < ApplicationController
   before_action :set_lego, only: [ :show, :edit, :update, :destroy, :toggle_hidden ]
 
   def index
-    @categories = Category.joins(:lego_categories).distinct
+    @categories = Category.all
 
     @legos = if params[:category_id].present?
-      category = Category.find(params[:category_id])
-      category.legos
+      Lego.joins(:categories).where(categories: { id: params[:category_id] }).distinct
     else
       Lego.all
     end
@@ -17,6 +16,15 @@ class LegosController < ApplicationController
       @legos
     else
       @legos.where(hidden: false)
+    end
+
+    @legos = case params[:show_hidden]
+    when "true"
+      @legos.where(hidden: true)
+    when "false"
+      @legos.where(hidden: false)
+    else
+      @legos
     end
 
     @legos = case params[:order_by]
@@ -33,6 +41,7 @@ class LegosController < ApplicationController
 
   def new
     @lego = Lego.new
+    @categories = Category.all
   end
 
   def show
@@ -46,6 +55,7 @@ class LegosController < ApplicationController
     if @lego.save
       redirect_to root_path
     else
+      @categories = Category.all
       render :new
     end
   end
@@ -86,6 +96,6 @@ class LegosController < ApplicationController
   end
 
   def lego_params
-    params.require(:lego).permit(:name, :description, :lego_set, :details, :image_url, :price, :hidden)
+    params.require(:lego).permit(:name, :description, :lego_set, :details, :image_url, :price, :hidden, category_ids: [])
   end
 end

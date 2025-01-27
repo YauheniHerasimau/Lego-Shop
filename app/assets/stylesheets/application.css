@@ -1,25 +1,29 @@
-.lego-card.hidden {
-  opacity: 0.6;
-  background-color: rgb(18, 224, 28);
-  border: 2px dashed rgb(23, 67, 25);
+body {
+  background: linear-gradient(
+    45deg,
+    #ff000021,
+    #ff7f0021,
+    #ffff0021,
+    #00ff0021,
+    #0000ff21,
+    #4b008221,
+    #8b00ff21
+  );
+  background-size: 400% 400%;
+  animation: rainbow 15s ease infinite;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
 }
 
-body {
-    background: linear-gradient(-45deg, #ffffff, #ebebeb, #cecece, #aeadad);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-    min-height: 100vh;
-    margin: 0;
+@keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
   }
-  
-  @keyframes gradient {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
+  50% {
+    background-position: 100% 50%;
   }
+  100% {
+    background-position: 0% 50%;
+  }
+}

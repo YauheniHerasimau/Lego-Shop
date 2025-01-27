@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   root "legos#index"
 
   resources :legos do
+    member do
+      patch :toggle_hidden
+    end
     collection do
       get :filter
     end

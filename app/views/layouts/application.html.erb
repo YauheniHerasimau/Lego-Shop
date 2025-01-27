@@ -18,42 +18,45 @@
   </head>
 
   <body>
-    <div class="nav-auth">
-      <% if user_signed_in? %>
+    <div class="content-container">
+      <div class="nav-auth">
+        <% if user_signed_in? %>
 
-        <% if user_signed_in? && current_user.admin? == false %>
-          <span class="user-email"><%= current_user.email %></span>
-        <% elsif user_signed_in? && current_user.admin? %>
-          <span class="admin-email"><%= current_user.email %></span>
+          <% if user_signed_in? && current_user.admin? == false %>
+            <span class="user-email"><%= current_user.email %></span>
+          <% elsif user_signed_in? && current_user.admin? %>
+            <span class="admin-email"><%= current_user.email %></span>
+          <% end %>
+
+            <%= link_to cart_path do %>
+              <%= image_tag "cart.jpg", class: "cart-icon" %>
+            <% end %>
+          <div>
+            <% if user_signed_in? && current_user.admin? %>
+              <div class="admin-action">
+                <%= form_tag(root_path, method: :get) do %>
+                  <%= select_tag "admin_action",
+                    options_for_select([
+                      ["Admin Actions", ""],
+                      ["All Legos", legos_path],
+                      ["New Lego Set", new_lego_path],
+                      ["Show Hidden Legos", legos_path(show_hidden: true)],
+                      ["Show Visible Legos", legos_path(show_hidden: false)]
+                    ]),
+                    onchange: "if(this.value != ''){ window.location = this.value }",
+                    class: "admin-select" %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "auth-button logout" %>
+        <% else %>
+          <%= link_to "Log in", new_user_session_path, class: "auth-button login" %>
+          <%= link_to "Sign up", new_user_registration_path, class: "auth-button signup" %>
         <% end %>
-
-          <%= link_to cart_path do %>
-            <%= image_tag "cart.jpg", class: "cart-icon" %>
-          <% end %>
-        <div>
-          <% if user_signed_in? && current_user.admin? %>
-            <div class="admin-actions">
-              <%= form_tag legos_path, method: :get do %>
-                <%= select_tag :admin_filter,
-                  options_for_select([
-                    ['All', 'all'],
-                    ['Hidden', 'hidden'],
-                    ['Visible', 'visible'],
-                    ['Add new', 'new']
-                  ], params[:admin_filter]),
-                  onchange: 'this.form.submit()',
-                  class: "admin-select" %>
-              <% end %>
-            </div>
-          <% end %>
-        </div>
-        <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "auth-button logout" %>
-      <% else %>
-        <%= link_to "Log in", new_user_session_path, class: "auth-button login" %>
-        <%= link_to "Sign up", new_user_registration_path, class: "auth-button signup" %>
-      <% end %>
+      </div>
+      <%= yield %>
     </div>
-    <%= yield %>
   </body>
 </html>
 
@@ -117,12 +120,20 @@
   color: rgb(255, 0, 0);
 }
 
-.admin-badge {
-  background-color: #28a745;
-  color: white;
-  padding: 4px 8px;
+.admin-action {
+  margin-left: 10px;
+  padding: 8px 16px;
   border-radius: 4px;
-  font-size: 0.8rem;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.admin-select {
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 .auth-button:hover {

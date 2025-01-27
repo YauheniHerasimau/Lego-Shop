@@ -1,7 +1,7 @@
 <div class="lego-form-container">
     <h1 class="form-title">Create New LEGO Set</h1>
     <div class="form-wrapper">
-        <%= form_with(model: @lego, local: true) do |form| %>
+        <%= form_with(model: @lego) do |form| %>
             <div>
                 <div class="form-group">            
                     <h1 class="form-label">Name</h1>
@@ -9,7 +9,15 @@
                     <h1>Description</h1>
                     <%= form.text_area :description %>
                     <h1>Lego Set</h1>
-                    <%= form.text_field :lego_set %>
+                    <div class="checkbox">
+                        <%= form.collection_check_boxes :category_ids,
+                        Category.all, :id, :name do |box| %>
+                        <div class="category-options">
+                            <%= box.check_box %>
+                            <%= box.label %>
+                            <% end %>
+                        </div>
+                    </div>
                     <h1>Price</h1>
                     <%= form.number_field :price %>
                     <h1>Quantity</h1>
@@ -36,6 +44,7 @@
     }
 
     .lego-form-container {
+        background-color:rgb(221, 214, 153);
         max-width: 600px;
         margin: 2rem auto;
         padding: 2rem;
@@ -79,5 +88,16 @@
         align-items: center;
         font-weight: bold;
         margin-bottom: 0.5rem;
+    }
+
+    .checkbox {
+        display: grid;
+        gap: 10px;
+        margin: 15px 0;
+    }
+
+    .category-options {
+        align-items: center;
+        gap: 8px;
     }
 </style>
