@@ -2,13 +2,16 @@
   <div>
     <% dom_id @lego %>
     <div>
-      <h1 class="name"><%= @lego.name %></h1>
+      <h1 class="name"><strong><%= @lego.name %></strong></h1>
     </div>
-      <h3>Product Details: </h3>
-      <p>Price: <%= number_to_currency(@lego.price) %></p>
+      <h3 class="name">Product Details: </h3>
+      <h2>Price: <%= number_to_currency(@lego.price) %></h2>
       <h2><%= image_tag "block.jpg", class: "block-icon" %>: <%= @lego.details %></h2>
     <div>
-      <p><%= @lego.description %></p>
+      <p><strong><%= @lego.description %></strong></p>
+    </div>
+    <div>
+      <%= image_tag @lego.image_url, alt: @lego.name, class: "lego-image" %>
     </div>
 
     <div>
@@ -203,5 +206,19 @@
   text-decoration: none;
   display: inline-block;
   background-color:rgb(246, 111, 111);
+}
+
+.lego-image {
+  max-width: 600px;
+  max-height: 600px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: white;
 }
 </style>

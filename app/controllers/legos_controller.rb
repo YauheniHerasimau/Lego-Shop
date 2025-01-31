@@ -30,6 +30,8 @@ class LegosController < ApplicationController
     @legos = case params[:order_by]
     when "newest"
       @legos.order(created_at: :desc)
+    when "oldest"
+      @legos.order(created_at: :asc)
     when "price"
       @legos.order(price: :asc)
     when "name"

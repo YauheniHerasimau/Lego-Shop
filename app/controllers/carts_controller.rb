@@ -12,7 +12,7 @@ class CartsController < ApplicationController
     @cart_item.quantity += 1
 
     if @cart_item.save
-      redirect_to cart_path
+      redirect_to @cart, notice: "Item added to cart."
     end
   end
 

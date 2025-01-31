@@ -16,6 +16,7 @@
             <%= select_tag :order_by, 
             options_for_select([
                 ['Newest', 'newest'],
+                ['Oldest', 'oldest'],
                 ['Sort by price', 'price'],
                 ['Sort by name', 'name'],
                 ['Sort by rating', 'rating']
@@ -28,6 +29,7 @@
     <div class="catalog">
         <% @legos.each do |lego| %>
             <%= link_to lego_path(lego), class: "lego-card #{lego.hidden? ? "hidden" : ""}" do %>
+            <%= render "legos/lego_img", lego: lego %>
                 <h2><%= lego.name %></h2>
                 <p>Price: <%= number_to_currency(lego.price) %></p>
                 <% if lego.opinions.any? %>         
