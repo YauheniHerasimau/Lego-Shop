@@ -1,0 +1,10 @@
+<h1>Your Messages</h1>
+
+<% @messages.each do |message| %>
+  <div>
+    <p><%= message.content %></p>
+    <small>Sent: <%= message.created_at.strftime("%B %d, %Y") %></small>
+  </div>
+<% end %>
+
+<%= link_to "Send New Message", new_message_path, class: "button" %>

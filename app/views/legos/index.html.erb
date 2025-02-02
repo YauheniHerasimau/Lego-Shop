@@ -11,6 +11,14 @@
                 <%= hidden_field_tag :order_by, params[:order_by] if params[:order_by].present? %>
         <% end %>
     </div>
+
+    <div>
+        <% if user_signed_in? && current_user.admin? == false %>
+            <%= link_to "Chat", messages_path %>
+        <% elsif user_signed_in && current_user.admin? == true %>
+            <%= link_to "Messages", messages_path %>
+        <% end %>
+    </div>
     <div>
         <%= form_tag legos_path, method: :get do %>
             <%= select_tag :order_by, 

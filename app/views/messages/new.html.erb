@@ -1,0 +1,12 @@
+<h1>Send Message to Admin</h1>
+
+<%= form_with(model: @message, local: true) do |f| %>
+  <div>
+    <%= f.label :content %>
+    <%= f.text_area :content %>
+  </div>
+
+  <div>
+    <%= f.submit "Send Message", class: "button" %>
+  </div>
+<% end %>

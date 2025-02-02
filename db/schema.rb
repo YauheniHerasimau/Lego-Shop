@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_28_235039) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_31_225548) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -87,6 +87,26 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_28_235039) do
     t.index ["cart_id"], name: "index_catr_items_on_cart_id"
   end
 
+  create_table "create_admin_message_responses", force: :cascade do |t|
+    t.integer "message_id", null: false
+    t.integer "admin_id", null: false
+    t.text "response_content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_create_admin_message_responses_on_admin_id"
+    t.index ["message_id"], name: "index_create_admin_message_responses_on_message_id"
+  end
+
+  create_table "create_messages", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "subject"
+    t.text "content", null: false
+    t.boolean "read", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_create_messages_on_user_id"
+  end
+
   create_table "lego_categories", force: :cascade do |t|
     t.integer "lego_id", null: false
     t.integer "category_id", null: false
@@ -109,6 +129,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_28_235039) do
     t.string "link"
     t.boolean "hiden"
     t.boolean "hidden", default: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "subject"
+    t.text "content"
+    t.boolean "read"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "opinions", force: :cascade do |t|
@@ -145,8 +175,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_28_235039) do
   add_foreign_key "cart_items", "legos"
   add_foreign_key "carts", "users"
   add_foreign_key "catr_items", "carts"
+  add_foreign_key "create_admin_message_responses", "admins"
+  add_foreign_key "create_admin_message_responses", "messages"
+  add_foreign_key "create_messages", "users"
   add_foreign_key "lego_categories", "categories"
   add_foreign_key "lego_categories", "legos"
+  add_foreign_key "messages", "users"
   add_foreign_key "opinions", "legos"
   add_foreign_key "opinions", "users"
 end

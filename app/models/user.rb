@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_one :cart
   after_create :create_cart
   has_many :opinions
+  has_many :messages
 
 def admin?
   admin == true

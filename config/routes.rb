@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     resources :responses, only: [ :new, :create, :edit, :update, :destroy ]
   end
 
+  resources :messages
+
   resources :description
 
   resource :cart, only: [ :show ] do
