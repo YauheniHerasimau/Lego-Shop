@@ -1,0 +1,13 @@
+<h1>All User Messages</h1>
+
+<div>
+  <% @messages.each do |message| %>
+    <div>
+      <p><strong>From:</strong> <%= message.user.email %></p>
+      <p><strong>Sent:</strong> <%= message.created_at.strftime("%B %d, %Y") %></p>
+      <p><strong>Message:</strong></p>
+      <p><%= message.content %></p>
+      <hr>
+    </div>
+  <% end %>
+</div>

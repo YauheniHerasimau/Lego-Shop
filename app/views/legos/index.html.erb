@@ -15,8 +15,8 @@
     <div>
         <% if user_signed_in? && current_user.admin? == false %>
             <%= link_to "Chat", messages_path %>
-        <% elsif user_signed_in && current_user.admin? == true %>
-            <%= link_to "Messages", messages_path %>
+        <% elsif user_signed_in? && current_user.admin? == true %>
+            <%= link_to "Messages", admin_messages_path %>
         <% end %>
     </div>
     <div>

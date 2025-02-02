@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   devise_for :users
   root "legos#index"
 
+  resources :legos
+  resources :messages
+
   resources :legos do
     member do
       patch :toggle_hidden
@@ -17,13 +20,12 @@ Rails.application.routes.draw do
     resources :opinions do
       resources :responses, only: [ :create, :edit, :update, :destroy ]
     end
+    resources :messages, only: [ :index ]
   end
 
   resources :opinions do
     resources :responses, only: [ :new, :create, :edit, :update, :destroy ]
   end
-
-  resources :messages
 
   resources :description
 
