@@ -2,19 +2,21 @@
 
 <div>
   <% @messages.each do |message| %>
-    <div>
-      <p><strong>From:</strong> <%= message.user.email %></p>
-      <p><small>Sent: <%= message.created_at.strftime("%B %d, %Y") %></small></p>
-      <p><strong>Message:</strong></p>
-      <p><%= message.content %></p>
+    <% if message %>
+      <div>
+        <p><strong>From:</strong> <%= message.user.email %></p>
+        <p><small>Sent: <%= message.created_at.strftime("%B %d, %Y") %></small></p>
+        <p><strong>Message:</strong></p>
+        <p><%= message.content %></p>
 
-      <% if message.reply %>
-        <p><strong>Reply: <%= message.reply.content %></strong></p>
-      <% else %>
-        <%= link_to "Reply", new_admin_message_replies_path(message) %>
-      <% end %>
+        <% if message.reply %>
+          <p><strong>Reply: <%= message.reply.content %></strong></p>
+        <% else %>
+          <%= link_to "Reply", new_admin_message_replies_path(message) %>
+        <% end %>
 
-      <hr>
-    </div>
+        <hr>
+      </div>
+    <% end %>
   <% end %>
 </div>

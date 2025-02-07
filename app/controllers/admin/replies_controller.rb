@@ -7,7 +7,8 @@ class Admin::RepliesController < ApplicationController
   
     def create
       @reply = @message.build_reply(reply_params)
-  
+      @reply.admin = current_user
+      #binding.irb
       if @reply.save
         redirect_to admin_messages_path
       else
