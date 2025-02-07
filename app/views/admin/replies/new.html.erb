@@ -1,0 +1,14 @@
+<h2>Reply to Message</h2>
+
+<div>
+  <p><%= @message.content %></p>
+</div>
+
+<%= form_with(model: [:admin, @message, @reply], local: true) do |f| %>
+  <div>
+    <%= f.label :content %>
+    <%= f.text_area :content %>
+  </div>
+
+  <%= f.submit "Send Reply" %>
+<% end %>

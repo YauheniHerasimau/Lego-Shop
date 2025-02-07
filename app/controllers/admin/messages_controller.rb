@@ -1,18 +1,13 @@
-module Admin
-  class MessagesController < ApplicationController
-    before_action :authenticate_user!
-    before_action :check_admin
+class Admin::MessagesController < ApplicationController
+  before_action :authenticate_user!
 
-    def index
-      @messages = Message.all.includes(:user).order(created_at: :desc)
-    end
+  def index
+    @messages = Message.includes(:user).all
+  end
 
-    private
-
-    def check_admin
-      unless current_user.admin?
-        redirect_to root_path
-      end
-    end
+  def mark_as_read
+    @message = Message.find(params[:id])
+    @message.update(admin_read: true)
+    redirect_to admin_messages_path
   end
 end

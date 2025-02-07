@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_31_225548) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_07_004301) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -132,10 +132,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_31_225548) do
   end
 
   create_table "messages", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.string "subject"
     t.text "content"
-    t.boolean "read"
+    t.integer "user_id", null: false
+    t.boolean "admin_read"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_messages_on_user_id"
@@ -153,6 +152,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_31_225548) do
     t.index ["user_id"], name: "index_opinions_on_user_id"
   end
 
+  create_table "replies", force: :cascade do |t|
+    t.text "content"
+    t.integer "message_id", null: false
+    t.integer "admin_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["admin_id"], name: "index_replies_on_admin_id"
+    t.index ["message_id"], name: "index_replies_on_message_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -167,20 +176,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_31_225548) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "admin_responses", "opinions"
-  add_foreign_key "admin_responses", "users"
-  add_foreign_key "cart_items", "carts"
-  add_foreign_key "cart_items", "legos"
-  add_foreign_key "carts", "users"
-  add_foreign_key "catr_items", "carts"
-  add_foreign_key "create_admin_message_responses", "admins"
-  add_foreign_key "create_admin_message_responses", "messages"
-  add_foreign_key "create_messages", "users"
-  add_foreign_key "lego_categories", "categories"
-  add_foreign_key "lego_categories", "legos"
   add_foreign_key "messages", "users"
   add_foreign_key "opinions", "legos"
   add_foreign_key "opinions", "users"
+  add_foreign_key "replies", "admins"
+  add_foreign_key "replies", "messages"
 end

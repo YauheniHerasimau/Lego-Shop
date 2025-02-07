@@ -4,9 +4,16 @@
   <% @messages.each do |message| %>
     <div>
       <p><strong>From:</strong> <%= message.user.email %></p>
-      <p><strong>Sent:</strong> <%= message.created_at.strftime("%B %d, %Y") %></p>
+      <p><small>Sent: <%= message.created_at.strftime("%B %d, %Y") %></small></p>
       <p><strong>Message:</strong></p>
       <p><%= message.content %></p>
+
+      <% if message.reply %>
+        <p><strong>Reply: <%= message.reply.content %></strong></p>
+      <% else %>
+        <%= link_to "Reply", new_admin_message_replies_path(message) %>
+      <% end %>
+
       <hr>
     </div>
   <% end %>

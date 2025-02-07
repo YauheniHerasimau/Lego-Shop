@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root "legos#index"
 
   resources :legos
-  resources :messages
+  resources :messages, only: [ :index, :new, :create ]
 
   resources :legos do
     member do
@@ -20,7 +20,13 @@ Rails.application.routes.draw do
     resources :opinions do
       resources :responses, only: [ :create, :edit, :update, :destroy ]
     end
-    resources :messages, only: [ :index ]
+    
+    resources :messages do
+      resource :replies, only: [ :new, :create ]
+      member do
+        patch :mark_as_read
+      end
+    end
   end
 
   resources :opinions do
